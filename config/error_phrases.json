@@ -1,0 +1,39 @@
+{
+  "error_indicators": [
+    "não entendi",
+    "não entendeu",
+    "não funcionou",
+    "não funciona",
+    "erro",
+    "problema",
+    "não consegui",
+    "bug",
+    "travou",
+    "não responde",
+    "tá com defeito",
+    "não está funcionando",
+    "deu erro",
+    "não resolveu",
+    "continua com problema"
+  ],
+  "frustration_indicators": [
+    "péssimo",
+    "horrível",
+    "não resolve nada",
+    "quero falar com humano",
+    "isso não funciona",
+    "desisto",
+    "ridículo",
+    "não serve pra nada",
+    "que droga",
+    "não ajuda"
+  ],
+  "escalation_phrases": [
+    "falar com atendente",
+    "preciso de ajuda humana",
+    "chamar supervisor",
+    "quero um humano",
+    "transferir para pessoa",
+    "atendimento humano"
+  ]
+}
