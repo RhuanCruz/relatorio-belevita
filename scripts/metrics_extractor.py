@@ -27,7 +27,7 @@ load_dotenv()
 # Dados fornecidos pelo cliente
 TOTAL_PEDIDOS = 35165
 TICKET_MEDIO = 179
-CUSTO_HORA_ATENDENTE = 10.22
+CUSTO_HORA_ATENDENTE = 12.62
 
 # Keywords para detecção
 KEYWORDS = {
@@ -148,6 +148,42 @@ class MetricsExtractor:
         print(f"[OK] Total: {len(all_messages)} messages")
         return all_messages
 
+    def fetch_leads(self) -> Dict[str, int]:
+        """Fetch leads to map phone/email to lead_id."""
+        print("\nFetching leads...")
+        identifier_map = {}
+        offset = 0
+        batch_size = 1000
+        
+        while True:
+            try:
+                response = self.client.table("leads").select(
+                    "id, phone, email"
+                ).range(offset, offset + batch_size - 1).execute()
+                
+                batch = response.data
+                if not batch:
+                    break
+                
+                for lead in batch:
+                    lid = lead.get("id")
+                    if not lid:
+                        continue
+                    
+                    if lead.get("phone"):
+                        identifier_map[str(lead["phone"])] = lid
+                    if lead.get("email"):
+                        identifier_map[lead["email"]] = lid
+                        
+                offset += batch_size
+                
+            except Exception as e:
+                print(f"  Error fetching leads at offset {offset}: {e}")
+                break
+        
+        print(f"[OK] Mapped {len(identifier_map)} identifiers to leads")
+        return identifier_map
+
     def fetch_agent_sessions(self) -> List[Dict]:
         """Fetch agent sessions for time-based analysis."""
         print("\nFetching agent sessions...")
@@ -157,8 +193,9 @@ class MetricsExtractor:
         
         while True:
             try:
+                # Revert to valid columns (removed session_id)
                 response = self.client.table("agent_sessions").select(
-                    "id, started_at, ended_at, analyse_sentimental"
+                    "id, lead_id, started_at, ended_at, analyse_sentimental"
                 ).order("id").range(offset, offset + batch_size - 1).execute()
                 
                 batch = response.data
@@ -286,13 +323,20 @@ class MetricsExtractor:
         """Process sessions for time-based metrics."""
         print("\nProcessing sessions for time analysis...")
         
+        self.mensagens_por_mes = Counter()
+        
         for session in tqdm(sessions, desc="Sessions"):
+            # Only process sessions that have sentiment analysis (completed conversations)
+            if not session.get("analyse_sentimental"):
+                continue
+
             started_at = session.get("started_at")
             if started_at:
                 try:
                     dt = datetime.fromisoformat(started_at.replace("Z", "+00:00"))
                     self.mensagens_por_hora[dt.hour] += 1
-                    self.mensagens_por_mes[dt.strftime("%b")] += 1
+                    # Use integer month for correct sorting (1-12)
+                    self.mensagens_por_mes[dt.month] += 1
                 except:
                     pass
         
@@ -319,6 +363,12 @@ class MetricsExtractor:
         # WISMO (rastreio)
         wismo_pct = round((self.intencoes.get("rastreio", 0) / self.total_conversas) * 100, 1) if self.total_conversas else 0
         
+        # Mapeamento de meses
+        meses_nomes = {
+            1: "Jan", 2: "Fev", 3: "Mar", 4: "Abr", 5: "Mai", 6: "Jun",
+            7: "Jul", 8: "Ago", 9: "Set", 10: "Out", 11: "Nov", 12: "Dez"
+        }
+
         metrics = {
             "kpis": {
                 "totalConversas": self.total_conversas,
@@ -360,15 +410,8 @@ class MetricsExtractor:
                 {"tipo": "Golpe", "quantidade": self.riscos.get("golpe", 0)},
             ],
             "volumeMensal": [
-                {"mes": mes, "atendimentos": count}
-                for mes, count in sorted(self.mensagens_por_mes.items(), key=lambda x: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"].index(x[0]) if x[0] in ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"] else 99)
-            ] or [
-                {"mes": "Jan", "atendimentos": 0},
-                {"mes": "Fev", "atendimentos": 0},
-                {"mes": "Mar", "atendimentos": 0},
-                {"mes": "Abr", "atendimentos": 0},
-                {"mes": "Mai", "atendimentos": 0},
-                {"mes": "Jun", "atendimentos": 0},
+                {"mes": meses_nomes.get(mes_num, str(mes_num)), "atendimentos": count}
+                for mes_num, count in sorted(self.mensagens_por_mes.items())
             ],
             "porHora": [
                 {"hora": f"{h:02d}h", "quantidade": self.mensagens_por_hora.get(h, 0)}

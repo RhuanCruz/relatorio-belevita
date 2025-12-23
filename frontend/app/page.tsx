@@ -178,8 +178,12 @@ export default function Dashboard() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-red-600">{metricsData.errosIA?.toolLeaks || 0}</div>
-                <p className="text-xs text-zinc-500">conversas com vazamento de código</p>
+                <div className="text-2xl font-bold text-red-600">
+                  {((metricsData.errosIA?.toolLeaks || 0) / metricsData.kpis.totalConversas * 100).toFixed(2)}%
+                </div>
+                <p className="text-xs text-zinc-500">
+                  {metricsData.errosIA?.toolLeaks || 0} conversas com vazamento
+                </p>
               </CardContent>
             </Card>
 
@@ -192,8 +196,12 @@ export default function Dashboard() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-orange-600">{metricsData.errosIA?.percebeuIA || 0}</div>
-                <p className="text-xs text-zinc-500">clientes que notaram a IA</p>
+                <div className="text-2xl font-bold text-orange-600">
+                  {((metricsData.errosIA?.percebeuIA || 0) / metricsData.kpis.totalConversas * 100).toFixed(1)}%
+                </div>
+                <p className="text-xs text-zinc-500">
+                  {metricsData.errosIA?.percebeuIA || 0} clientes notaram
+                </p>
               </CardContent>
             </Card>
           </section>
@@ -201,29 +209,7 @@ export default function Dashboard() {
           <Separator className="mb-12" />
 
           {/* Volume Chart */}
-          <section className="mb-12">
-            <div className="flex items-center gap-2 mb-4">
-              <h2 className="text-xl font-semibold text-zinc-800">Volume de Atendimentos</h2>
-              <HelpTooltip text="Evolução do número de conversas ao longo dos meses. Útil para identificar tendências de crescimento e picos sazonais." />
-            </div>
-            <Card>
-              <CardHeader>
-                <CardTitle>Evolução Mensal</CardTitle>
-                <CardDescription>Últimos 6 meses</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ChartContainer config={chartConfig} className="h-[300px] w-full">
-                  <AreaChart data={metricsData.volumeMensal} accessibilityLayer>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="mes" />
-                    <YAxis />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Area type="monotone" dataKey="atendimentos" fill="#3b82f6" fillOpacity={0.3} stroke="#3b82f6" strokeWidth={2} />
-                  </AreaChart>
-                </ChartContainer>
-              </CardContent>
-            </Card>
-          </section>
+
 
           {/* Grid Charts - Linha 1 */}
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">

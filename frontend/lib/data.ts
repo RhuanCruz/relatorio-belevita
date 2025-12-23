@@ -21,13 +21,7 @@ export const metricsData = {
     })),
     risco: metricsJson.risco,
     volumeMensal: metricsJson.volumeMensal.map((v: { mes: string; atendimentos: number }) => ({
-        mes: v.mes
-            .replace("Jul", "Jul")
-            .replace("Aug", "Ago")
-            .replace("Sep", "Set")
-            .replace("Oct", "Out")
-            .replace("Nov", "Nov")
-            .replace("Dec", "Dez"),
+        mes: v.mes,
         atendimentos: v.atendimentos,
     })),
     porHora: metricsJson.porHora,

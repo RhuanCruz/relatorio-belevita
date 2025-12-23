@@ -5,13 +5,13 @@
     "taxaContato": 59.3,
     "taxaResolucaoIA": 81.7,
     "ticketMedio": 179,
-    "custoHoraAtendente": 10.22
+    "custoHoraAtendente": 12.62
   },
   "financeiro": {
     "conversasCriticas": 3808,
     "revenueAtRisk": 681632,
     "horasEconomizadas": 3477,
-    "economiaReais": 35535
+    "economiaReais": 43880
   },
   "sentimento": [
     {
@@ -95,85 +95,85 @@
   "volumeMensal": [
     {
       "mes": "Jul",
-      "atendimentos": 332
+      "atendimentos": 196
+    },
+    {
+      "mes": "Ago",
+      "atendimentos": 3167
+    },
+    {
+      "mes": "Set",
+      "atendimentos": 3893
+    },
+    {
+      "mes": "Out",
+      "atendimentos": 7718
     },
     {
       "mes": "Nov",
       "atendimentos": 10856
     },
     {
-      "mes": "Aug",
-      "atendimentos": 6456
-    },
-    {
-      "mes": "Sep",
-      "atendimentos": 6053
-    },
-    {
-      "mes": "Oct",
-      "atendimentos": 7718
-    },
-    {
-      "mes": "Dec",
-      "atendimentos": 8703
+      "mes": "Dez",
+      "atendimentos": 8904
     }
   ],
   "porHora": [
     {
       "hora": "08h",
-      "quantidade": 2668
+      "quantidade": 2369
     },
     {
       "hora": "09h",
-      "quantidade": 3273
+      "quantidade": 2946
     },
     {
       "hora": "10h",
-      "quantidade": 3673
+      "quantidade": 3197
     },
     {
       "hora": "11h",
-      "quantidade": 3117
+      "quantidade": 2628
     },
     {
       "hora": "12h",
-      "quantidade": 3226
+      "quantidade": 2859
     },
     {
       "hora": "13h",
-      "quantidade": 2937
+      "quantidade": 2576
     },
     {
       "hora": "14h",
-      "quantidade": 2843
+      "quantidade": 2474
     },
     {
       "hora": "15h",
-      "quantidade": 2914
+      "quantidade": 2274
     },
     {
       "hora": "16h",
-      "quantidade": 2363
+      "quantidade": 2053
     },
     {
       "hora": "17h",
-      "quantidade": 2311
+      "quantidade": 2006
     },
     {
       "hora": "18h",
-      "quantidade": 1824
+      "quantidade": 1613
     },
     {
       "hora": "19h",
-      "quantidade": 1555
+      "quantidade": 1354
     },
     {
       "hora": "20h",
-      "quantidade": 1435
+      "quantidade": 1258
     },
     {
       "hora": "21h",
-      "quantidade": 1213
+      "quantidade": 1040
     }
   ],
   "errosIA": {
@@ -265,5 +265,5 @@
     ]
   },
   "wismo": 59.0,
-  "geradoEm": "2025-12-22T21:05:05.472829"
+  "geradoEm": "2025-12-23T11:15:49.854033"
 }
