@@ -1,0 +1,269 @@
+{
+  "kpis": {
+    "totalConversas": 20861,
+    "totalPedidos": 35165,
+    "taxaContato": 59.3,
+    "taxaResolucaoIA": 81.7,
+    "ticketMedio": 179,
+    "custoHoraAtendente": 10.22
+  },
+  "financeiro": {
+    "conversasCriticas": 3808,
+    "revenueAtRisk": 681632,
+    "horasEconomizadas": 3477,
+    "economiaReais": 35535
+  },
+  "sentimento": [
+    {
+      "tipo": "Positivo",
+      "quantidade": 8866,
+      "fill": "#3b82f6"
+    },
+    {
+      "tipo": "Neutro",
+      "quantidade": 9394,
+      "fill": "#1d8ecf"
+    },
+    {
+      "tipo": "Negativo",
+      "quantidade": 275,
+      "fill": "#0f13e4"
+    }
+  ],
+  "intencoes": [
+    {
+      "name": "Rastreio",
+      "value": 12304
+    },
+    {
+      "name": "Outros",
+      "value": 4525
+    },
+    {
+      "name": "Troca",
+      "value": 846
+    },
+    {
+      "name": "Cancelamento",
+      "value": 494
+    },
+    {
+      "name": "Dúvida",
+      "value": 366
+    }
+  ],
+  "produtosProblemas": [
+    {
+      "categoria": "Calçados",
+      "reclamacoes": 4283
+    },
+    {
+      "categoria": "Moda Íntima",
+      "reclamacoes": 1457
+    },
+    {
+      "categoria": "Blusas",
+      "reclamacoes": 1037
+    },
+    {
+      "categoria": "Calças",
+      "reclamacoes": 793
+    },
+    {
+      "categoria": "Acessórios",
+      "reclamacoes": 587
+    }
+  ],
+  "risco": [
+    {
+      "tipo": "Estorno",
+      "quantidade": 1311
+    },
+    {
+      "tipo": "PROCON",
+      "quantidade": 717
+    },
+    {
+      "tipo": "Reclame Aqui",
+      "quantidade": 417
+    },
+    {
+      "tipo": "Golpe",
+      "quantidade": 1363
+    }
+  ],
+  "volumeMensal": [
+    {
+      "mes": "Jul",
+      "atendimentos": 332
+    },
+    {
+      "mes": "Nov",
+      "atendimentos": 10856
+    },
+    {
+      "mes": "Aug",
+      "atendimentos": 6456
+    },
+    {
+      "mes": "Sep",
+      "atendimentos": 6053
+    },
+    {
+      "mes": "Oct",
+      "atendimentos": 7718
+    },
+    {
+      "mes": "Dec",
+      "atendimentos": 8703
+    }
+  ],
+  "porHora": [
+    {
+      "hora": "08h",
+      "quantidade": 2668
+    },
+    {
+      "hora": "09h",
+      "quantidade": 3273
+    },
+    {
+      "hora": "10h",
+      "quantidade": 3673
+    },
+    {
+      "hora": "11h",
+      "quantidade": 3117
+    },
+    {
+      "hora": "12h",
+      "quantidade": 3226
+    },
+    {
+      "hora": "13h",
+      "quantidade": 2937
+    },
+    {
+      "hora": "14h",
+      "quantidade": 2843
+    },
+    {
+      "hora": "15h",
+      "quantidade": 2914
+    },
+    {
+      "hora": "16h",
+      "quantidade": 2363
+    },
+    {
+      "hora": "17h",
+      "quantidade": 2311
+    },
+    {
+      "hora": "18h",
+      "quantidade": 1824
+    },
+    {
+      "hora": "19h",
+      "quantidade": 1555
+    },
+    {
+      "hora": "20h",
+      "quantidade": 1435
+    },
+    {
+      "hora": "21h",
+      "quantidade": 1213
+    }
+  ],
+  "errosIA": {
+    "toolLeaks": 64,
+    "toolLeakExamples": [
+      {
+        "session_id": "5521979893422",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?\n\nComo você se chama?\n\nCom certeza!\nPara eu consultar o status exato do seu pedido, por favor, me informe o e-mail que você utilizou na compra. O sistema mostra que"
+      },
+      {
+        "session_id": "5521980149180",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?\n\nComo você se chama?\n\nPode ficar tranquilo!\n\nA Belevita cobre qualquer taxa.Se te pedirem pagamento, ignora , provavelmente é golpe\n\nA gente cuida de tudo por aqui"
+      },
+      {
+        "session_id": "556492624578",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?\n\nComo você se chama?\n\nPoxa, sinto muito por isso! Mas pode ficar tranquila que vamos resolver.\n\nPara eu te ajudar da melhor forma, você poderia me informar o númer"
+      },
+      {
+        "session_id": "5519992547612",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?\n\nComo você se chama? Olá Jussara!\n\nTudo bem por aqui, e com você?\n\nCom certeza! Para eu consultar o status exato do seu pedido, por favor, me informe o e-mail que "
+      },
+      {
+        "session_id": "556282272205",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?  \n\nComo você se chama? tool_code\nprint(default_api.Update_a_row_in_Supabase(fieldValues0_Field_Value='Patricia'))\ntool_code\nprint(default_api.get_faq(query='tamanh"
+      },
+      {
+        "session_id": "553291438714",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?\n\nComo você se chama? tool_code\nprint(default_api.Update_a_row_in_Supabase(fieldValues0_Field_Value='Priscila'))\nthought\nThe user, Priscila, is asking about her ten"
+      },
+      {
+        "session_id": "5519997749459",
+        "preview": " Ótima pergunta!\n\nPara eu te ajudar melhor, você poderia me explicar qual é a sua dúvida específica sobre o pagamento com cartão de crédito? Entendi o que você relatou!\n\nJá acionei o nosso time respon"
+      },
+      {
+        "session_id": "5519974036493",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?\n\nComo você se chama? tool_code\nprint(default_api.Update_a_row_in_Supabase(fieldValues0_Field_Value='Rita'))\nthought\nThe user, Rita, made a purchase and realized sh"
+      },
+      {
+        "session_id": "5512988487028",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?\n\nComo você se chama?\n\nPara eu verificar o que aconteceu com o seu pedido, por favor, me informe o e-mail que você utilizou na compra. tool_code\nprint(default_api.U"
+      },
+      {
+        "session_id": "5519994665819",
+        "preview": " Olá, meu nome é Juliana!\n\nTudo bem?\n\nComo você se chama?\n\nEntendi! Sem problemas, você pode fazer a devolução.\n\nO processo é feito pelo nosso portal online.\n\nSó pra eu saber, você já chegou a abrir a"
+      }
+    ],
+    "percebeuIA": 1641,
+    "percebeuIAExamples": [
+      {
+        "session_id": "relatorio-tasks-opus",
+        "preview": " Faça o resumo das tarefas a seguir :\n[\n  {\n    \"id\": \"795d72df-ccb4-4da8-8f40-3815b689304b\",\n    \"identifier\": \"OPUS-124\",\n    \"title\": \"Desenhar um escopo p/ disparos Murilo\",\n    \"priority\": 2,\n   "
+      },
+      {
+        "session_id": "evanderlisa@gmail.com",
+        "preview": " <historico_rastreio>\n[\n  {\n    \"cod_rastreio\": \"NM867320357BR\",\n    \"history_status\": \"Olá! Sem problemas, preparei um resumo completo e fácil de entender sobre a sua encomenda.\\n\\nAqui estão os deta"
+      },
+      {
+        "session_id": "licaalmeida70@gmail.com",
+        "preview": " <historico_rastreio>\n[\n  {\n    \"cod_rastreio\": \"ND591799975BR\",\n    \"history_status\": \"Olá! Preparei um resumo completo sobre o andamento da sua encomenda. Veja abaixo todos os detalhes:\\n\\n### **Res"
+      },
+      {
+        "session_id": "anacrisguararema@hotmail.com",
+        "preview": " <historico_rastreio>\n[\n  {\n    \"cod_rastreio\": \"ND589566708BR\",\n    \"history_status\": \"Olá! Aqui está o resumo do rastreamento da sua encomenda. Boas notícias: ela já foi entregue! 🎉\\n\\n### **Resumo "
+      },
+      {
+        "session_id": "emarinetesilva@gmail.com",
+        "preview": " <historico_rastreio>\n[\n  {\n    \"cod_rastreio\": \"ND535694672BR\",\n    \"history_status\": \"Olá! Aqui estão os detalhes do rastreamento da sua encomenda.\\n\\n### **Resumo da sua Entrega**\\n\\n*   **Código d"
+      },
+      {
+        "session_id": "mdemorais1922@gmail.com",
+        "preview": " <historico_rastreio>\n[\n  {\n    \"cod_rastreio\": \"ND645375764BR\",\n    \"history_status\": \"Olá! Aqui está o resumo do rastreamento da sua encomenda.\\n\\n### **Resumo do Objeto** 📦\\n\\n*   **Código de Rastr"
+      },
+      {
+        "session_id": "559281090131",
+        "preview": " \"Olá\\nEstou esperando minha a mais de um mês e nada\" \"Olá\\nEstou esperando minha a mais de um mês e nada\\nComprei dia 22 junho\\nNão falaram que vinha de fora na compra\\nChateada\\nCom a demora\\nE o po"
+      },
+      {
+        "session_id": "558893573914",
+        "preview": " \"Olá bom dia\\nQuando é que vai chegar o produto?\" \"Cristina\\nmartinsdasilvacristina2@gmail.com\" \"Obrigada\" \"10\" \"Por nada\\nTá bom\" \"Bom dia\\nMeu produto chega quando?\" \"Bom dia\\nMeu produto chega qua"
+      },
+      {
+        "session_id": "5511943440906",
+        "preview": " \"Olá\\nBom Dia\" \"Gostaria de informações sobre meu pedido...estou tendo muitas dificuldades no rastreamento dele e também acredito que não tenha entendido muito bem os prazos\\nEmilene Nunes\\n    *Olá "
+      },
+      {
+        "session_id": "5511940122757",
+        "preview": " \"Bom dia\\nVivi💕\\nEncontramos seu pedido. Segue as informações sobre o(s) pedido(s) encontrados:\\n\\n*#242151*\\n💳 _Cartão de crédito_\\n✅ _Pago_\\n🚚 Clique no link para rastrear seu pedido: https://rptn."
+      }
+    ]
+  },
+  "wismo": 59.0,
+  "geradoEm": "2025-12-22T21:05:05.472829"
+}

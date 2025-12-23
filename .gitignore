@@ -34,8 +34,7 @@ ENV/
 
 # Output Data (dados sensíveis do cliente)
 output/
-*.json
-!config/error_phrases.json
+
 
 # Cache
 output/cache/
