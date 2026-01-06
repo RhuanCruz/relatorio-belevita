@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -61,8 +60,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Roboto', system-ui, sans-serif;
-  --font-heading: 'Montserrat', system-ui, sans-serif;
+  --font-sans: system-ui, sans-serif;
+  --font-heading: system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -109,7 +108,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Roboto', system-ui, sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
   }
 
   h1,
@@ -118,7 +117,7 @@
   h4,
   h5,
   h6 {
-    font-family: 'Montserrat', system-ui, sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
     font-weight: 600;
   }
 }
@@ -126,54 +125,12 @@
 /* Opus Custom Components */
 @layer components {
 
-  /* Gradient Border Cards */
-  .opus-card {
-    background: var(--card);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-left: 3px solid transparent;
-    border-image: var(--opus-gradient) 1;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-  }
-
-  .opus-card:hover {
-    box-shadow: 0 8px 30px rgba(0, 242, 254, 0.1);
-    transform: translateY(-2px);
-  }
-
   /* Gradient Text */
   .opus-gradient-text {
-    background: var(--opus-gradient);
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #6a11cb 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  /* Gradient Button */
-  .opus-button {
-    background: var(--opus-gradient);
-    color: #0a0a0a;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
-  }
-
-  .opus-button:hover {
-    opacity: 0.9;
-    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
-  }
-
-  /* Tech Pills */
-  .opus-pill {
-    background: rgba(79, 172, 254, 0.1);
-    border: 1px solid rgba(79, 172, 254, 0.3);
-    color: var(--opus-blue);
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
   }
 
   /* Glowing Effect */
@@ -188,6 +145,17 @@
       radial-gradient(ellipse at bottom right, rgba(106, 17, 203, 0.08) 0%, transparent 50%),
       var(--background);
   }
+
+  /* Tech Pills */
+  .opus-pill {
+    background: rgba(79, 172, 254, 0.1);
+    border: 1px solid rgba(79, 172, 254, 0.3);
+    color: #4facfe;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
 }
 
 /* Custom scrollbar */
@@ -197,14 +165,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--opus-bg-dark);
+  background: #0a0a0a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--opus-cyan), var(--opus-purple));
+  background: linear-gradient(180deg, #00f2fe, #6a11cb);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--opus-blue);
+  background: #4facfe;
 }
