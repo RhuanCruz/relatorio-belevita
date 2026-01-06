@@ -4,14 +4,17 @@ import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 import { Bar, BarChart, XAxis, YAxis, Pie, PieChart, Cell, Label } from "recharts"
-import { MessageSquare, Bot, DollarSign, ShieldCheck, AlertTriangle, Clock, TrendingUp, Package, HelpCircle, Users, CheckCircle, Target, Zap } from "lucide-react"
+import { MessageSquare, Bot, DollarSign, ShieldCheck, AlertTriangle, Clock, TrendingUp, Package, HelpCircle, Users, CheckCircle, Target, Zap, ChevronDown } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { metricsData } from "@/lib/data"
-import { motion } from "framer-motion"
-import { useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { useRef, useState, useEffect, useCallback } from "react"
 
 // Opus Hub Color Palette
 const COLORS = ["#00f2fe", "#4facfe", "#6a11cb", "#8b5cf6", "#06b6d4"]
+
+// Section IDs
+const SECTIONS = ["capa", "sumario", "performance", "insights", "riscos", "recomendacoes"]
 
 const chartConfig = {
   atendimentos: { label: "Atendimentos", color: "#00f2fe" },
@@ -65,12 +68,12 @@ const scaleIn = {
   }
 }
 
-// Componente de Seção com Snap
+// Componente de Seção
 function Section({ id, children, className = "" }: { id: string; children: React.ReactNode; className?: string }) {
   return (
     <section
       id={id}
-      className={`h-screen snap-start snap-always flex flex-col justify-center overflow-hidden ${className}`}
+      className={`h-screen flex flex-col justify-center overflow-hidden ${className}`}
     >
       {children}
     </section>
@@ -122,10 +125,83 @@ function HeroMetric({ icon: Icon, label, value, subtext, color = "#00f2fe", dela
 }
 
 export default function Dashboard() {
+  const [currentSection, setCurrentSection] = useState(0)
+  const [isScrolling, setIsScrolling] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const scrollToSection = useCallback((index: number) => {
+    if (index < 0 || index >= SECTIONS.length || isScrolling) return
+
+    setIsScrolling(true)
+    setCurrentSection(index)
+
+    const element = document.getElementById(SECTIONS[index])
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+
+    // Prevent rapid scrolling
+    setTimeout(() => setIsScrolling(false), 800)
+  }, [isScrolling])
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault()
+
+      if (isScrolling) return
+
+      if (e.deltaY > 0) {
+        // Scroll down
+        scrollToSection(currentSection + 1)
+      } else if (e.deltaY < 0) {
+        // Scroll up
+        scrollToSection(currentSection - 1)
+      }
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isScrolling) return
+
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        e.preventDefault()
+        scrollToSection(currentSection + 1)
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault()
+        scrollToSection(currentSection - 1)
+      }
+    }
+
+    container.addEventListener("wheel", handleWheel, { passive: false })
+    window.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      container.removeEventListener("wheel", handleWheel)
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [currentSection, isScrolling, scrollToSection])
+
   return (
     <TooltipProvider>
-      {/* Container com Snap Scroll */}
-      <main className="h-screen overflow-y-scroll snap-y snap-mandatory bg-[#0a0a0a] scroll-smooth">
+      {/* Navigation Dots */}
+      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3">
+        {SECTIONS.map((section, index) => (
+          <button
+            key={section}
+            onClick={() => scrollToSection(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${currentSection === index
+              ? "bg-[#00f2fe] scale-125"
+              : "bg-white/30 hover:bg-white/50"
+              }`}
+            aria-label={`Go to section ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Container */}
+      <div ref={containerRef} className="h-screen overflow-hidden bg-[#0a0a0a]">
 
         {/* ═══════════════════════════════════════════════════════════════════
             SEÇÃO 1: CAPA
@@ -188,18 +264,6 @@ export default function Dashboard() {
               <p className="text-[#b0b0b0] text-xl">Análise completa do atendimento automatizado</p>
             </motion.div>
 
-            {/* Período */}
-            <motion.div
-              className="flex justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
-              <div className="inline-flex items-center gap-4 bg-[#151515] px-8 py-4 rounded-full border border-[#2a2a2a]">
-                <Clock className="h-5 w-5 text-[#4facfe]" />
-                <span className="text-[#f0f0f0]">Período: Julho - Dezembro 2025</span>
-              </div>
-            </motion.div>
 
             {/* Scroll Indicator */}
             <motion.div
@@ -310,36 +374,37 @@ export default function Dashboard() {
             />
 
             <motion.div
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+              className="grid grid-cols-1 lg:grid-cols-5 gap-6"
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              {/* Left: KPIs */}
-              <motion.div className="space-y-4" variants={fadeInUp}>
+              {/* Left: KPIs - 2 columns */}
+              <motion.div className="lg:col-span-2 space-y-4" variants={fadeInUp}>
                 <Card className="bg-[#151515] border-[#2a2a2a]">
-                  <CardContent className="p-6">
+                  <CardContent className="p-5">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-[#b0b0b0] text-sm">Taxa de Resolução Autônoma</p>
-                        <p className="text-4xl font-bold text-[#00f2fe] mt-1">{metricsData.kpis.taxaResolucaoIA}%</p>
+                        <p className="text-[#b0b0b0] text-xs uppercase tracking-wider">Taxa de Resolução</p>
+                        <p className="text-3xl font-bold text-[#00f2fe] mt-1">{metricsData.kpis.taxaResolucaoIA}%</p>
+                        <p className="text-[#666] text-xs mt-1">sem escalação humana</p>
                       </div>
-                      <div className="w-20 h-20 rounded-full border-4 border-[#00f2fe] flex items-center justify-center">
-                        <CheckCircle className="h-10 w-10 text-[#00f2fe]" />
+                      <div className="w-16 h-16 rounded-full border-3 border-[#00f2fe] flex items-center justify-center">
+                        <CheckCircle className="h-8 w-8 text-[#00f2fe]" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-[#151515] border-[#2a2a2a]">
-                  <CardContent className="p-6">
-                    <p className="text-[#b0b0b0] text-sm mb-4">Chamados WISMO (Onde está meu pedido?)</p>
-                    <div className="flex items-end gap-4">
-                      <p className="text-4xl font-bold text-[#4facfe]">{metricsData.wismo}%</p>
-                      <p className="text-[#b0b0b0] text-sm pb-1">de todos os atendimentos</p>
+                  <CardContent className="p-5">
+                    <p className="text-[#b0b0b0] text-xs uppercase tracking-wider mb-3">Chamados WISMO</p>
+                    <div className="flex items-baseline gap-2">
+                      <p className="text-3xl font-bold text-[#4facfe]">{metricsData.wismo}%</p>
+                      <p className="text-[#666] text-xs">dos atendimentos</p>
                     </div>
-                    <div className="mt-4 h-2 bg-[#2a2a2a] rounded-full overflow-hidden">
+                    <div className="mt-3 h-2 bg-[#2a2a2a] rounded-full overflow-hidden">
                       <motion.div
                         className="h-full rounded-full"
                         style={{ background: 'linear-gradient(90deg, #00f2fe, #4facfe)' }}
@@ -353,15 +418,15 @@ export default function Dashboard() {
                 </Card>
 
                 <Card className="bg-[#151515] border-[#2a2a2a]">
-                  <CardContent className="p-6">
-                    <p className="text-[#b0b0b0] text-sm mb-4">Sentimento das Conversas</p>
-                    <div className="flex gap-4">
+                  <CardContent className="p-5">
+                    <p className="text-[#b0b0b0] text-xs uppercase tracking-wider mb-3">Sentimento</p>
+                    <div className="flex gap-2">
                       {metricsData.sentimento.map((item, index) => (
-                        <div key={item.tipo} className="flex-1 text-center">
-                          <p className="text-2xl font-bold" style={{ color: COLORS[index] }}>
+                        <div key={item.tipo} className="flex-1 text-center bg-[#0a0a0a] rounded-lg py-3">
+                          <p className="text-xl font-bold" style={{ color: COLORS[index] }}>
                             {Math.round((item.quantidade / metricsData.kpis.totalConversas) * 100)}%
                           </p>
-                          <p className="text-[#b0b0b0] text-xs">{item.tipo}</p>
+                          <p className="text-[#666] text-xs">{item.tipo}</p>
                         </div>
                       ))}
                     </div>
@@ -369,20 +434,20 @@ export default function Dashboard() {
                 </Card>
               </motion.div>
 
-              {/* Right: Chart */}
-              <motion.div variants={fadeInUp}>
-                <Card className="bg-[#151515] border-[#2a2a2a] h-full">
-                  <CardHeader>
+              {/* Right: Chart - 3 columns */}
+              <motion.div variants={fadeInUp} className="lg:col-span-3">
+                <Card className="bg-[#151515] border-[#2a2a2a] h-full flex flex-col">
+                  <CardHeader className="pb-2">
                     <CardTitle className="text-[#f0f0f0]">Motivos de Contato</CardTitle>
                     <CardDescription className="text-[#b0b0b0]">Principais intenções dos clientes</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <ChartContainer config={chartConfig} className="h-[280px] w-full">
+                  <CardContent className="flex-1 flex items-center">
+                    <ChartContainer config={chartConfig} className="h-[320px] w-full">
                       <BarChart data={metricsData.intencoes} layout="vertical" accessibilityLayer>
-                        <XAxis type="number" stroke="#b0b0b0" />
-                        <YAxis dataKey="name" type="category" width={120} stroke="#b0b0b0" />
+                        <XAxis type="number" stroke="#666" tickLine={false} axisLine={false} />
+                        <YAxis dataKey="name" type="category" width={110} stroke="#b0b0b0" tickLine={false} axisLine={false} />
                         <ChartTooltip content={<ChartTooltipContent />} />
-                        <Bar dataKey="value" radius={4}>
+                        <Bar dataKey="value" radius={6}>
                           {metricsData.intencoes.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
@@ -631,7 +696,7 @@ export default function Dashboard() {
           </div>
         </Section>
 
-      </main>
+      </div>
     </TooltipProvider>
   )
 }
